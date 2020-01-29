@@ -1,12 +1,13 @@
 
 module.exports = {
-   validateAngle: (angle) => {  // to make sure that angle is translated to anything between 0 and 360 integer 
-    angle = parseInt(angle)
+
+   validateAngle: (angle) => {
+     angle = parseInt(angle)
     if(angle>=360) angle = angle-360
     if(angle<0) angle = angle+360
       return parseInt(angle)
    },
-  // ABSTRACT REASONING
+
   abstract: (recno,YN) => {
     let lineAngle = task.getRandom(0,18)*20
     let arcStart = task.getRandom(0,18)*20
@@ -63,11 +64,12 @@ module.exports = {
     result += "</answer></h3>"
       return result
   },
-  // FILL IN THE BLANKS
+
   fillInTheBlanks: (recno, freq, maxQ, matlID)=>{
     let paraPool = []
     paraPool.push("Preamble Philippine Constitution^^^We, the sovereign Filipino people, imploring the aid of Almighty God, in order to build a just and humane society, and establish a Government that shall embody our ideals and aspirations, promote the common good, conserve and develop our patrimony, and secure to ourselves and our posterity, the blessings of independence." )
-    if(matlID==13){  // Panganan Questions
+    
+    if(matlID==13){
       paraPool.push("Province of Pangasinan^^^At the close of the 17th century, San Quintin was still a wilderness inhabited by fierce man-eating tribes called “Ubilaos”.  At the beginning of the 18th century, the first Christian settlers from the coastal towns of La Union and Ilocos Sur arrived.  An exodus of immigrants from the Ilocos coastal towns found their way to the fast growing village.  As a result of the great exodus, the “Ubilaos” and the other smaller minority tribes deserted their dwelling places and settled deeper into the safety of the vast forests.  They left behind their settlements.  The different settlements were organized into one entity and was named Lango-lango. ")
       paraPool.push("Province of Pangasinan^^^The union was made to promote closer understanding and amiable relationship among the settlers because trade was flourishing.  Due to the rapid growth of the population, Lango-lango was transformed into a barrio under the jurisdiction of the municipality of Umingan which was then a town of Nueva Ecija.")
       paraPool.push("Province of Pangasinan^^^In 1861, Don Quintin Lictawa called for a “Great Conference” attended by all the leaders of the different settlements to plan to press the Spanish government to recognize the barrio as a town and to name it as San Quintin.  In 1863, a Spanish decree was enacted giving birth to the municipality of San Quintin.")
@@ -75,6 +77,7 @@ module.exports = {
       paraPool.push("Dipalo River <img src='https://assets.explora.ph/xp-images/600xautox90/images-dev/entry-attraction-gallery/1498824715_explora-dipalo-river-4.jpg'^^^Despite the rough roads, it is not uncommon to find here groups enjoying a picnic and a cool swim. The adventure-seeking ones follow the river upstream, where the hike eventually leads to several waterfalls. Since there are no official trails yet, tourists are advised to coordinate with the local tourism office if planning an excursion of the area.")
       paraPool.push("Kalipkip Falls <img src='https://assets.explora.ph/xp-images/600xautox90/images-dev/entry-attraction-carousel/1501476796_kalipkip-falls.JPG'>^^^A 10 ft waterfall called the KALIPKIP waterfalls that is about 10 minutes cliff walking away from the katukakan falls. Mountaineers named the falls kalipkip came from the word “masikip” or “narrow”. But never underestimate this waterfalls because its depth believed 15- 18 ft. To those who wants to experience an adrelanine rush while having fun, you can swim to its water as long as you have the strong mind and have the guts to dive. If you want to dive or swim to this waterfall you must be accompanied by your friends or any mountaineers.© LUMAYAO INTEGRATED SCHOOL, SAN QUINTIN, PANGASINAN ‘THE JUMPERS")
       paraPool.push("Katukakakan Falls <img style='width:400px' src='https://assets.explora.ph/xp-images/600xautox90/images-dev/entry-attraction-carousel/1501476199_katukakan-falls.JPG'>^^^A two storey falls is the Katukakan Falls. A 15ft tall waterfall that believed to be enchanting because o its origin that the waterfall got its name from the farm frogs or an ilocan term “tokak”, living at the top area of the said falls. According to the people near falls, long ago, they are scared of this waterfall because frogs might fell into the water while you are swimming.© LUMAYAO INTEGRATED SCHOOL, SAN QUINTIN, PANGASINAN ")
+  
       }
     else{
       paraPool.push("Beyond Forgetting^^^For a moment I thought I could forget you.<br>For a moment I thought I could still the restlessness in my heart.<br><br>I thought the past could no longer haunt me – nor hurt me.<br>How wrong I was!")
@@ -102,7 +105,7 @@ module.exports = {
       para = para[1]
       console.log("header", header)
     }
-    console.log("PARA", para)
+console.log("PARA", para)
     para = para.split(" ")
     let recFreq = parseInt(para.length/200)
     if(recFreq>freq) freq = recFreq
@@ -156,7 +159,7 @@ module.exports = {
     }
     return result
   },
-  // FOOLED WITH AGE
+
   ageOfB: ()=>{
     const sentenceA= "XXX years ago, nameA was YYY times as young as nameB."
     const sentenceB= "XXX years from now, nameA will be YYY times as old as nameB."
