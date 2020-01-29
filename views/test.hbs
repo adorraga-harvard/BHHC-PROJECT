@@ -1,0 +1,624 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<style>
+    .QA {
+    border-style: solid; 
+    border-width: 0px 0px 1px 0px; 
+    border-color: silver;
+    }
+    .QA_star{
+        font-size: 30px;
+        color:maroon;
+        cursor:pointer;
+    }
+    h1{
+        font-size:36px;
+    }
+    h2{
+        font-size:28px;
+    }
+    h3{
+        margin-top:3px;
+        margin-bottom: 3px;
+        font-size: 22px;
+        text-underline-position: below;
+    }
+    h4{
+        font-size:16px
+    }
+    body{
+        margin-top: 5px;
+    }
+    .btnQ{
+        border-radius: 10;
+        width:100px;
+        height:100px;
+        background: goldenrod;
+        color:indigo;
+        font-size:30px;
+    }
+    input {
+        cursor: pointer;
+    }
+    .answerClass{
+        font-size: 36px;
+        color: grey;
+    }
+    .answerBtn{
+        width:40px !important;
+        height:40px !important;
+        cursor:pointer;
+        border-radius: 10px !important;
+        font-size: 24px !important; 
+        background:Pink;
+        color: black !important;
+    }
+    .answerBtn:hover {
+        width:50px !important;
+        height:50px !important;
+        cursor:pointer;
+        border-radius: 10px !important;
+        font-size: 28px !important; 
+        background:Green;
+
+    }
+      .answerBtn2{
+        width:40px;
+        height:24px !important;
+        margin:0 !important;
+        cursor:pointer !important;
+        color: black !important;
+        font-weight: 900 !important;
+        border-radius: 5px !important;
+        text-transform: uppercase;
+        background:Pink !important;
+        text-align: center; 
+        font-size: 18px !important;
+    }
+    .questionText{
+        font-size: 22px;
+    }
+    body{
+        padding: 2px;
+        font-family:Georgia, 'Times New Roman', Times, serif; 
+    }
+    .header{
+        vertical-align: top;
+        margin-bottom: 4px;
+    }
+    .testTakerName {
+        font-size: 50px;
+    }
+    .subjectMatter{
+        font-size: 28px;
+        margin-bottom: 0px;
+    }
+    hr{
+        border-top:solid 1px #e4b9b9;
+    }
+    .wrong {
+        background:Red !important;
+        height:24px !important;
+        border-radius: 5px !important;
+        text-transform: uppercase;
+        text-align: center; 
+        font-size: 18px !important;
+    }
+    .correct {
+        background:LimeGreen !important;
+        height:24px !important;
+        border-radius: 5px !important;
+        text-transform: uppercase;
+        text-align: center; 
+        font-size: 18px !important;
+    }
+    .unknown {
+        background-image:url('/images/unknown.gif');
+        background-size: 100px 100px;
+    }
+</style>
+
+<div class='header' style="display:inline-block;">
+    <img  style="width:100px" id='testLogo' src="/images/testwiz/{{logoName}}"; />
+</div>
+<div style="display:inline-block;">
+    <h2 class='header'  id='headerText' style="text-shadow: 2px 2px 2px aquamarine; color:teal; margin-top:0px">{{providerName}}</h1>
+    <div id='subjectMatter' class='subjectMatter'>{{testType}}</div>
+    <div id='testTaker' class='testTakerName'>{{facultyName}}</div>
+</div>
+<hr>
+<h1-6>{{{leaderBoard}}}<span ><b style='font-size:40px' id='countdownTimer'></b></span></h1-6>
+
+<button type="button" class="btn-warning" data-toggle="popover" data-placement="bottom"  id='submitBtn' data-trigger="focus" style="display:none"
+ data-html="true" data-content="<center><div style='margin:5px;background:Pink'><br><h3>Are you sure you want to submit your paper now?</h3><br><br><button onclick='assessNow(true)' class='btn-success'>Yes, please.</button>&nbsp;<button class='btn-warning'>Cancel</button><br><br></div></center>"
+title="Gentle Confirmation." >Submit your paper</button>
+ <div style="display:none" id="resultSection">
+ <h3 style="color:crimson">
+     <a class="btn-floating btn-small pulse"><i class="material-icons"></i></a>
+     Thank you. You got a raw score of <b id='rawScore'></b>. We hope you enjoyed taking this assessment.
+</h3>
+     <div style='width:800px; margin-left:50px; border: 5px solid silver; background:lightblue'>
+        <h4>&nbsp;Please sign-up/login to get your <b>Summary Report with the correct answers</b> and <b>Online Certificate</b>.</h4>
+         <center>
+         <form id='sendMail' action="/sendMail/" method="POST" target="hiddenFrame">
+             <table style="border:0px; border-collapse:initial;" >
+                 <tr style='height:20px'>
+                     <td>First Name</td><td><input class='req' id='firstName' name="firstName"></td> 
+                     <td>Last Name</td><td><input class='req'  id='lastName' name="lastName"></td>
+                 </tr>
+                 <tr style='height:20px'>
+                     <td>Email</td><td colspan="3"><input type="email" class='req' style='width:450px' id='email' name="email"><br>
+                     <input class='req' style='width:450px' placeholder="Confirm Email" type="email" id='email2' name="email2">
+                     <input name="content" value='THIS IS A TEST' style='display:none' >
+                      <input name="materialID"  style='display:none' >
+                      <!-- PUT THE MATERIAL ID IN HERE -->
+                       <input id='testScoreForm' name="testScore" style='width:50px; display:none' >
+                        <input id='certURL' name="certURL" style='width:50px; display:none' >
+                        <input id='url' name="url" value='PNP_IQ' style='width:50px; display:none' >
+                        <confirmEmail style='display:none;background:Gold;color:Maroon'>Email addresses should be the same</confirmEmail>
+                     <input style='margin-left:100px; display:none' name='submitBtn' type="submit"  onclick='showMore()' value='Sign-Up/Login'></td> 
+                    
+                 </tr>
+             </table>
+         </form>
+         </center>
+         <div id="message" style='display:none;color:red; background:Yellow; height:45px'></div>
+     </div>
+  
+</div>
+    <h4 id='dashBoard'></h4> 
+ <div id='mainSection' style="display:none">
+    <h3>{{{testScore}}}</h3>
+    <h4 id='dashAnswers'></h4>
+    <div id='testToShow' style='height:800px; overflow:hidden;color:grey'>{{{testItems}}}</div>
+ </div>
+<!--=================================================================-->
+ <div id='introPage' style="width:970px; border: ridge 4px silver; background:cornsilk">
+     <center>
+         <h3>You have {{numItems}} easy puzzles to solve...</h3>
+         <h4>Those greyed-out buttons above will light up to signify that <br>you have answered a corresponding  puzzle number.<br>
+         
+         <h3>You are given {{countdownTimer}} seconds to ace this test.</h3>
+         <h4>If you are good enough, you will be awarded a Certificate like that one below.</h4><br>
+         <button class="btn-small pulse" onclick='startTheEngines()'>Yes, I'm ready.</button><br>
+     <hr><center>
+     <iframe style='width:900px; height:730px; border:none' 
+     src='/test/cert/{{facultyName}}/{{testType}}/{{logoName}}/{{providerName}}/30%7C30/Harvard2018!'></iframe>
+     </center>
+     </center>
+
+ </div>
+<!--=================================================================-->
+<div style="display:none" id="certSection">
+    <iframe id='certFrame' style="border:0px; width:1000px; height:768px"></iframe>
+</div>
+ <hr>
+    <testToShow></testToShow>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+        
+         $( "a.scrollLink" ).click(function( event ) {
+            event.preventDefault();
+            var target = $(this).attr("href");
+            var scrollDist = $(target).position().top - $("#Question_1").position().top;
+            console.log(scrollDist);
+            $("#testToShow").animate({ scrollTop: scrollDist }, 500);   
+        });
+    });
+
+    function showMore(){
+        $(".correctAnswer").css("background", "LimeGreen")
+        $("#testTaker").html( $("#firstName").val().toUpperCase() + " " + $("#lastName").val().toUpperCase())
+        $("#message").html("Thanks! An email was successfully sent to <a href='#'>"+ $("#email").val() + "</a><br>Please take note that the correct choices are now marked with Green button, below.").show()
+    }
+    //==== for abstract we have to convert tho diagams using canvas
+    function HexChar(h){
+         return String.fromCharCode(parseInt(h,16))
+    } 
+
+    function rotate(angle){
+        ctx.rotate( (Math.PI/180) * angle )   
+    }
+
+    function resize(number){
+        ctx.scale(number, number)
+    }
+
+   let arrows= [2191, 2197, 2192, 2198, 2193, 2199, 2190, 2196,2191, 2197, 2192, 2198, 2193, 2199,2190, 2196, 2191, 2197, 2192, 2198, 2193, 2199,2190, 2196]
+   var ctx;
+   var canvas 
+   renderAbstract()
+
+   function renderAbstract(style, resultant){
+    let cx
+    let cy
+    let scale
+        function getX(angle){
+                return Math.sin((Math.PI/180) * angle) * cx
+        }
+        function getY(angle){
+                return Math.cos((Math.PI/180) * angle) * cy   
+        }
+        function drawArc(start, end, radius, switch1, switch2, w){
+            radius= parseInt(radius * scale)
+            start = Math.sin((Math.PI/180) * start)
+            end = Math.sin((Math.PI/180) * end)
+            ctx.lineWidth= w * scale;
+            ctx.beginPath()
+            ctx.moveTo(cx, cy)
+            ctx.strokeStyle='black'
+            ctx.arc(cx,cy, radius, start, end, true)
+            ctx.closePath()
+            ctx.stroke();
+        }
+
+        function drawLine(x,y ){
+            ctx.strokeStyle='yellow'
+            ctx.beginPath()
+            ctx.moveTo(cx, cy)
+            ctx.lineTo(cx+ x ,cy-y )
+            ctx.closePath()
+            ctx.stroke();
+        }
+        
+    if(11==11) {
+        for(let q=1; q<={{numItems}}; q++){
+             let unknown = $("#question_" + q).attr("data-ask")
+             console.log("UNKNONW", unknown)
+             if(unknown==undefined ) continue
+            for(let y=1; y<=5; y++)
+            {
+                const qy= "_" + q + "_" + y
+                let abstractDraw = $("#question" + qy).html()            
+                if(resultant==undefined){
+                    let val = $("#question" + qy).css("display","inline-block").html("").attr("old-html", abstractDraw)
+                }
+                else {
+                    abstractDraw = $("#question" + qy).attr("old-html")
+                    console.log("ABSTRACT DRAW " + qy, abstractDraw)
+                }
+                this.canvas = document.createElement("canvas")
+                $(this.canvas).attr("id", "canvas" + qy).attr("width", 106).attr("height", 106).css("border","2px solid silver")
+                    .css("background","orange").css('border-radius',"53px").appendTo($("#question" + qy) )
+                 cx= this.canvas.width/2;
+                 cy= this.canvas.height/2;
+                canvas = this.canvas;
+                ctx = this.canvas.getContext("2d")
+                
+                const d = abstractDraw.split(":")
+                scale =1;
+                if($("#question_" + q).attr("data-ask")==y)
+                {
+                    $(this.canvas).css("background","white").addClass("unknown")
+                    ctx.font='75px Arial'
+                    ctx.fillStyle='white'
+                    ctx.fillText("?",cx-17,cy+25)
+                    ctx.fillStyle='black'
+                    ctx.fillText("?",cx-20,cy+22)
+                }
+                else{
+                drawLine(getX(d[0]), getY(d[0]))
+                drawLine(getX(d[2]), getY(d[2]))
+                drawArc(d[1],d[2], d[6],d[3], d[4], d[5], d[6])
+                }
+
+            }
+            for(let y=1; y<=6; y++){
+                const qy= "_" + q + "_" + y
+                let ans = $("#answer" + qy).attr("data-draw")
+                if(resultant!=undefined){
+                    let val = ans.split(":")[7]
+                    console.log("ANSWER DRAW " + qy, val)
+                    let bg =$("#answer" + qy).css("backgroundColor") + ""
+                    if(val==undefined){
+                        $("#answer" + qy).addClass("correctAnswer")
+                        if(bg.indexOf("128")>=0){
+                            $("#answer" + qy).css("background", "limegreen")
+                            $("#answer" + qy).html("&#x2713;&nbsp;")
+                        }
+                    } 
+                    if(bg.indexOf("128")>=0 && val!=undefined){
+                            $("#answer" + qy).html("&#x2717;&nbsp;")
+                            $("#answer" + qy).css("background", "red")
+                    }
+                }
+            
+                this.canvas = document.createElement("canvas")
+                $(this.canvas).attr("id", "canvas" + qy).attr("width", 74).attr("height", 74).css("border","1px solid silver")
+                    .css("background","orange").css('border-radius',"37px").appendTo( $("#questionAbs" + qy) )
+                 cx= this.canvas.width/2;
+                 cy= this.canvas.height/2;
+                canvas = this.canvas;
+                ctx = this.canvas.getContext("2d")
+                const d = ans.split(":")
+                ctx.font='25px Arial'
+                scale =0.7
+                drawLine(getX(d[0]), getY(d[0]))
+                drawLine(getX(d[2]), getY(d[2]))
+                drawArc(d[1],d[2], d[6],d[3], d[4], d[5])
+            }
+        }
+        }
+   } 
+
+
+    populateDashboard({{numItems}})
+    let answeredItems = 0
+    function submitNow(id){
+        $("#"+id).popover({title:"This is an example", content:'THIS IS IT!'})
+        $("#"+id).popover('show')
+    }
+
+    function startTheEngines(){
+        $("#introPage").hide()
+        $("#mainSection").show()
+        highlightIt(1)
+        startExam()
+    }
+
+    $(".req").change( function(){
+          if( $("[name=firstName]").val()>""  && $("[name=lastName]").val()>"" && $("[name=email]").val()>"" ) {
+              if($("[name=email]").val() == $("[name=email2]").val()){
+                    $("[name=submitBtn]").show()
+                    $("confirmEmail").hide()
+              }
+              else {
+                   $("[name=submitBtn]").hide()
+                $("confirmEmail").show()
+              }
+      }
+      else {
+            $("[name=submitBtn]").hide()
+      }
+
+    })
+
+    function callServer(url){
+        $.ajax({
+                type: 'get',
+                url: url,
+                //async: false,
+                success: function (data) {
+                    // use data
+                    console.log("data", data)
+                    return data
+                }
+            })
+    }
+
+    var timerCount ;
+    var testStartedID;
+
+                function startTimer(duration, display)  {
+                var start = Date.now(),
+                    diff,
+                    minutes,
+                    seconds;
+                            function timer() {
+                                // startTimer() was called
+                                diff = duration - (((Date.now() - start) / 1000) | 0);
+                                // does the same job as parseInt truncates the float
+                                minutes = (diff / 60) | 0;
+                                seconds = (diff % 60) | 0;
+                                minutes = minutes < 10 ? "0" + minutes : minutes;
+                                seconds = seconds < 10 ? "0" + seconds : seconds;
+                                display.textContent = minutes + ":" + seconds; 
+                                if(display.textContent=="00:00") {
+                                    //it means it is over
+                                    clearInterval(timerCount)
+                                    console.log("CLEARED1")
+                                    assessNow(100)
+                                }
+                                if (diff <= 0) {
+                                    start = Date.now() + 1000;
+                                }
+                            };
+                // we don't want to wait a full second before the timer starts
+                timer();
+                timerCount = setInterval(timer, 1000);
+                }
+
+    function startExam() {
+        var numSeconds = {{countdownTimer}} ,
+            display = document.querySelector('#countdownTimer');
+            startTimer(numSeconds, display);
+            // record the IP address, MaterialID, startTime
+            testStartedID = callServer("/data/AddTestStart/{{materialID}}")
+    };
+
+
+    function populateDashboard(num){
+       $("[name=url]").val("{{origURL}}")
+       $("[name=materialID]").val("{{materialID}}")
+        if("{{providerName}}">""){
+                 $('#testLogo').show();
+        }
+        else
+        {
+            document.getElementById('testLogo').style.display='none';
+        }
+        document.getElementById("headerText").innerHTML = (document.getElementById("headerText").innerHTML).toUpperCase() 
+        let result = ""
+        let answers = ""
+            for(var x=1; x<=num; x++)
+            {
+                    result+= "<a id='hrefB_"+x+"' href='#Question_" + x+ "' class='scrollLink'><button class='dboard' id='dashBoard_"+ x +"' style='border-radius:8px;color:grey;width:40px;height:30px;font-size:12px'>"+ x +"</button><button id='dashAnswer_"+ x +"' style='display:none;width:0px'></button></a>"
+                    if(x % 20 ==0) result +="<br>"
+            }
+        document.getElementById("dashBoard").innerHTML = result;
+
+        
+    }
+
+        function showOnDashboard2(num, answer,YN, exempt){
+            const m = $("#Question_" + (num +1)).attr("data-multiple")
+            $("#answer_" + num ).attr("data-answer", answer)
+            $("#hrefB_"+ num).attr("href", "#Question_" + exempt).addClass("scrollLink")
+            if(m!= undefined)
+            {   
+                $("#Question_" + (num +1)).focus()
+            }
+            else{
+                location.href="#Question_" + (num +1)
+            }
+            $("#dashBoard_"+ num ).html('?')
+                    YN  = YN.split("_")[0].toUpperCase()
+                    YN = (answer.toUpperCase()==YN)?1:0
+            showOnDashboard(num, answer,YN, exempt)
+        }
+
+        function highlightIt(num){
+            $(".dboard").css("border", "").css("height","30px");
+            $("#dashBoard_"+ (num)).css("border", "inset 6px Teal").css("height","40px");
+        }
+     
+        function showOnDashboard(num, answer,YN, exempt){  
+            answeredItems++
+            console.log("["+num+"]", "["+answer+"]", YN, "dashBoard_["+ num + "]")
+            document.getElementById("dashBoard_"+ num ).style.background
+            
+                if(exempt== undefined){
+                document.getElementById("dashBoard_"+ num ).innerHTML = String.fromCharCode(64+ answer)
+                    for(let x=1; x<=6; x++){
+                        document.getElementById("answer_" + num + "_" + x).style.background="Pink"; 
+                        }
+                        document.getElementById("answer_" + num + "_" + answer).style.background="Green"; 
+                }
+         
+            document.getElementById("dashBoard_"+ num ).style.color="maroon"; 
+            document.getElementById("dashBoard_"+ num ).style.background="pink"; 
+           
+            highlightIt(num+1)
+
+            if(YN==1){
+                document.getElementById("dashAnswer_"+ num ).innerHTML="1"; 
+            }
+            else{
+                document.getElementById("dashAnswer_"+ num ).innerHTML="0";
+            }
+            if(answeredItems>=1) {
+                $("#submitBtn").show()
+            }
+            else
+            {
+                $("#submitBtn").hide()
+            }
+            if(num=={{numItems}}) {
+               highlightIt(num)
+                assessNow(false)
+            }
+            
+        }
+
+
+    $(".dboard").mouseup( function(){
+        $(".dboard").css("border", "");
+        const num = $(this).attr("id").replace("dashBoard_","")
+        highlightIt(num)
+    })
+
+    const ticker = ["&#x2713;&nbsp;", "&#x2717;&nbsp;"]
+    const color = ["LimeGreen", "Red"]
+      
+
+    function viewCertificate(){
+        const numItems= ({{numItems}})
+        $("[name=testScore]").val(TotalScore)
+       // $('#mainSection').hide(); $('#certSection').hide();
+        $("#certFrame").attr("src", certURL )
+            let testToShow = $("#testToShow").html().replace(/height:800px;/g,"")//.replace(/id="answer_/g, 'id="answerResult_')
+            $("testToShow").html(testToShow)
+            $("canvas").remove()
+            $("#testToShow").remove()
+            renderAbstract(1, true)
+            $("testToShow").css("pointer-events", "none").css("pointer", "none");
+            for(let x=1; x<=numItems; x++){
+                let letterNumber = $("#dashBoard_"+x).html()
+                letterNumber= (letterNumber.charCodeAt(0))-64
+                let isCorrect = $("#dashAnswer_" + x).html()  
+                for(y=1; y<=6; y++){
+                    let obj = $("#answer_" + x + "_"+ y)
+                    let ask = obj.attr("data-ask")
+                    if(ask=="200_1")  obj.addClass("correctAnswer")//.css("background", color[0])
+                    if(letterNumber==y && ( isCorrect=="1"  || ask=="200_1" ) ){
+                        obj.html(ticker[0])
+                        obj.css("background", color[0])
+                    }
+                    if(letterNumber==y && (isCorrect=="0" || ask== "200_0")) {
+                        obj.html(ticker[1])
+                        obj.css("background", color[1])
+                    }
+                 
+                }
+            }
+    }
+         
+                 
+
+
+    var TotalScore = 0;
+    var certURL;
+        
+    function assessNow(theEnd){
+        const numItems= ({{numItems}})
+        let missing = 0;
+        if(theEnd==100)
+        {
+            $("#countdownTimer").hide()
+             clearInterval(timerCount)
+            console.log("CLEARED2")
+            endNow()
+            alert("Time is up. Thank you!")
+        }
+                    function endNow(){
+                        clearInterval(timerCount)
+                        $("#countdownTimer").hide()
+                        $("#submitBtn").hide()
+                        $("#dashBoard").hide()
+                        $("#mainSection").hide()
+                        $("#resultSection").show()
+                        $("[name=testScore]").val(TotalScore)
+                        // update testCompleted  `TESTCOMPLETED_UPDATE` (A varchar(20), B integer, C integer)
+                        callServer("/data/UpdateTestStart/{{materialID}}/" + TotalScore)
+                        const rawScore = TotalScore + "|" + numItems
+                        viewCertificate()
+                        $("#rawScore").html(rawScore).css("font-size","18px")
+                        certURL = "/test/cert/" + $("#testTaker").html() +"/" +$("#subjectMatter").html() + "/{{logoName}}/{{providerName}}/"+ rawScore + "/Harvard2018!"
+                        $("[name=certURL]").val(certURL)
+                    }
+        for(let x=1; x<=numItems; x++){
+            if(document.getElementById("dashAnswer_"+ x ).innerHTML=="1"){
+                    TotalScore ++
+                    console.log(TotalScore)
+            }
+            else
+            {
+                if(document.getElementById("dashAnswer_"+ x ).innerHTML=="")   missing++;
+            }
+          
+        }
+        if(theEnd) {
+            endNow()
+        } 
+        else
+        {
+                    if(missing>0){
+                        alertX("Warning.","<h3>You still have " + missing + " unanswered items.<br>You can get back to those items by clicking on the button number.</h3>")
+                    }
+                    else
+                    {
+                        endNow()
+                    }
+
+        }
+    }
+
+ 
+</script>

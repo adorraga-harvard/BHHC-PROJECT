@@ -1,0 +1,352 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="/javascripts/modernizr-custom.js"></script>
+
+
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/stylesheets/bootstrap.min.css" >
+<link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css" >
+<link rel="stylesheet" href="/stylesheets/font-awesome.min.css" >
+<link rel="stylesheet" href="/stylesheets/materialize.min.css" >
+
+<script src="/javascripts/jquery-3.3.1.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script src="/javascripts/popper.min.js"></script>
+-->
+
+
+<style>
+    [type='checkbox']{
+        width: 20px;
+        height:20px;
+        opacity: 100 !important;
+        cursor: pointer !important;
+        pointer-events: '' !important;
+    }
+
+    h1{
+        margin: 0px !important;
+    }
+
+    .popover{
+        max-width: 600px !important;
+    }
+
+    .QA {
+    border-style: solid; 
+    border-width: 0px 0px 0px 0px; 
+    border-color: silver;
+    }
+    
+    .QA_star{
+        font-size: 30px;
+        color:maroon;
+        cursor:pointer;
+    }
+
+    .btnQ{
+        border-radius: 10;
+        width:100px;
+        height:100px;
+        background: goldenrod;
+        color:indigo;
+        font-size:30px;
+    }
+
+    .QA:focus{
+        background:gold;
+    }
+    
+    .answerClass{
+        font-size: 36px;
+        color: grey;
+    }
+    .answerBtn{
+        width:40px;
+        height:40px;
+        cursor:pointer;
+        border-radius: 10px;
+        font-size: 24px; 
+        background:Pink;
+    }
+
+    .questionText{
+        font-size: 22px;
+    }
+    body{
+        padding: 2px;
+        font-family:Georgia, 'Times New Roman', Times, serif; 
+    }
+    .header{
+        vertical-align: top;
+        margin-bottom: 4px;
+    }
+    .testTakerName {
+        font-size: 50px;
+    }
+    .subjectMatter{
+        font-size: 28px;
+        margin-bottom: 0px;
+    }
+</style>
+<h1 style="text-shadow: 2px 2px 2px rgb(136, 136, 130); color:burlywood">Test.Gen</h1>
+
+<div id='genSubmit'>
+    <form  action="/test/SubmitMaterial" style='display:none'  method="POST">
+        <input id='type' name='type'>
+        <input id='testCount' name='testCount'>
+        <input type="submit" id='submitBtn' value="Submit Request">
+
+    </form>
+        <!-- 
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Type</td>
+                <td>Number of Questions</td>
+            </tr>
+            <tr>
+                <td><input type="text" size=30 value="{{fullName}}" name="name" ></td>
+                <td><input type="email" size=50 value="{{emailAddress}}" name="emailAddress" ></td>
+                <td><select value="{{quizType}}" name="type">
+                        <option value=1>Multiple-Choice</option>
+                        <option value=2>Yes or No</option>
+                        <option value=3>True or False</option>
+                        <option value=4>Rating/Satisfaction</option>
+                        <option value=5>Canned: IQ</option>
+                        <option value=6>Canned: Math</option>
+                        <option value=7>Canned: Odd Man Out</option>
+                        <option value=8>Canned: English</option>
+                        <option value=9>Canned: Biology</option>
+                        <option value=10>Canned: Computer Science</option>
+                        <option value=11>Canned: Algebra</option>
+                        <option value=12>Canned: Trivia</option>
+                        <option value=20>Random</option>
+                    </select> 
+                </td>
+                <td><input type="numeric" value="{{testCount}}" size=3 name="testCount" ></td>
+            </tr>
+            <tr>
+                <td colspan=5 style="text-align: center"><input  type="submit" value="Submit Request"></td>
+            </tr>
+        </table>
+        -->
+
+  <ul class="nav nav-tabs">
+      <li class="nav-item">
+          <a href="javascript:genExam(1)" class="nav-link  btn active">Multiple Choice</a>
+      </li>
+      <li class="nav-item">
+          <a href="javascript:genExam(2)" class="nav-link btn">Yes/No</a>
+      </li>
+      <li class="nav-item">
+          <a href="javascript:genExam(3)" class="nav-link btn">True/False</a>
+      </li>
+      <li class="nav-item">
+          <a href="javascript:genExam(4)" class="nav-link btn">Survey</a>
+      </li>
+      <!-- 
+      <li class="nav-item">
+          <a href="javascript:genExam(5)" class="nav-link btn">IQ Test</a>
+      </li>
+      <li class="nav-item">
+          <a href="javascript:genExam(7)" class="nav-link btn">Odd Man Out</a>
+      </li>
+       <li class="nav-item">
+          <a href="javascript:genExam(9)" class="nav-link btn">Age Diff</a>
+      </li>
+       <li class="nav-item">
+          <a href="javascript:genExam(11)" class="nav-link btn">Abstract</a>
+      </li>
+      -->
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Canned Exams</a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:genExam(10)">Psychology</a><br>
+              <a class="dropdown-item" href="#">Math</a><br>
+              <a class="dropdown-item" href="#">Biology</a><br>
+              <a class="dropdown-item" href="#">Computer Science</a><br>
+              <a class="dropdown-item" href="#">IQ Test</a><br>
+              <a class="dropdown-item" href="#">Odd Man Out</a><br>
+              <a class="dropdown-item" href="#">Relationship</a><br>
+              <a class="dropdown-item" href="#">Juggle with Age</a>
+          </div>
+      </li>
+      <li class="nav-item">Count:
+          <input value='10' id='counter' style='width:40px; height:24px; margin:0px' type='number' >
+       
+      </li>
+      <ii class="nav-item">
+          &nbsp;&nbsp;&nbsp; <button onclick="$('#testCount').val($('#counter').val());  $('#submitBtn').click()">Submit</button>
+      </ii>
+      
+  </ul>
+
+</div>
+<div style="display:{{displayYN}}">
+    <div style='border:grey 5px double; width:800px;background:linen;'>
+    <div style="margin-left:30px; margin-right:30px;">
+        <div>
+            <b style="font-size:30px;margin:bottom:2px; text-shadow: 2px 2px 2px rgb(136, 136, 130); color:burlywood">{{facultyName}}</b>
+            <i >{{email}}</i>
+        </div>
+    <h2 style='color:lightgreen; text-shadow: 2px 2px 2px rgb(136, 136, 130);'>{{testType}}</h2>
+    <hr>
+    <h3>{{{testScore}}}</h3>
+        <div style="color:{{textColor}};">
+            <div style="height:800px; overflow:scroll;">
+                        {{{generateQuestions}}}
+            </div>
+        </div>
+    </div>
+    </div>
+    <div>
+        <input type='checkbox' > Randomized Order of Questions&nbsp;&nbsp;&nbsp;
+        <input type='checkbox' > Randomized Order of Answer Choices&nbsp;&nbsp;&nbsp;
+        <button onclick='submitToDB()'>Submit Test Material</button>    
+    </div>
+    <div>
+        <input onclick='document.getElementById("submitSec").style.display="";' type="checkbox"> I agree with all the ......
+    </div>
+    <div id='submitSec' style='display:none'>
+        <button id='submitBtn' >Print</button>
+        <button id='makeOnline' >Make this Online</button>
+
+    </div>
+    <hr>
+    <button onclick="showMeQA()">SHOW ME THE QUESTION AND ANSWER</button>
+    <input name='QA_ITEM'>
+</div>
+
+<script>
+
+    $(document).ready(function(){$("[data-toggle='popover']").popover();});
+    $(".dataEntry").change(function(){
+          alert("here")
+        const val = $("this").val()
+        console.log(val)
+        alert(val)
+    })
+
+
+    function genExam(num) {
+        $("#type").val(num);
+    }
+
+    function showMeQA(){
+            document.getElementById("QA_ITEM").innerHTML =document.getElementById("testQuestionNumber_1").innerHTML;
+    }
+
+    function toggleHideShow(number){
+        if(document.getElementById("QA_" +number).style.display=='')
+        document.getElementById("QA_" +number).style.display='none'
+        else
+        document.getElementById("QA_" +number).style.display=''
+    }
+    
+    function submitToDB(){
+        let answers =""
+        let questions =""
+        for(let x=1; x<=20; x++){
+            questions+="<input value='"+ $("#question_" + x).html() +"' name='questionDB_"+x+"'>"
+            const category = $("#question_" + x).attr("category")
+            if(category==4) {
+                answers+= "<input value='Stars:5' name='answerDB_"+x+ "'>"
+            }
+            else{
+                for(let y=1; y<=6; y++){
+                    answers+= "<input value='"+ $("#answer_" + x + "_" + y).html() +"' name='answerDB_"+x+"_" + y + "'>"
+                }
+            }
+        }
+        $("answersPart").html(answers)
+        $("questionsPart").html(questions)
+        
+        alert("QUESTIONS\n" + $("questionsPart").html())
+        alert("ANSWERS\n" + $("answersPart").html())
+        $("#submitDB").submit()
+    }
+
+     function getContent(val, x, question){
+              let clicker=" onclick='acceptQuestion("+ x +")' "
+              let focuser=" onfocus='setText("+ x +")' "
+              if(question!=undefined){
+                  clicker=" onclick='acceptAnswer("+ question +"," + x +")'"
+                  focuser=" onfocus='setText("+ question +"," + x +")'"
+              }
+              let content = "<center style='width:500px'><textarea "+ focuser+" XXXXXXX class=\"dataEntry\" id=\"testQA_"+ x 
+                            +"\" rows=3 cols=250></textarea><br><a "+ clicker +" class=\"btnQuestion btn-warning\">Accept</a>&nbsp;&nbsp;"
+                            +"<a onclick=\"cancelQuestion()\" class=\"btn-error\">Cancel</a></center>"
+             content = content.replace("XXXXXXX", "value=\'"+ val +"\'")
+             return content
+     }
+
+     function setText(Q, num){
+         let id=""
+         if(num==undefined){
+             id= $("#question_"+ Q).html()
+             $("#testQA_"+Q).val(id)
+         }
+         else{
+             id= $("#answer_" + Q + "_" + num).html()
+             $("#testQA_"+num).val(id)
+         }
+     }
+
+    
+     $("question").mousedown(function(){
+                $("[data-toggle='popover']").popover('destroy');
+                let id= $(this).attr("id")
+                id = id.replace("question_", "")
+                 const val = $(this).html() 
+                 $(this).css("background","pink") 
+                 $(this).popover({content : getContent(val , id)   }).popover("show")
+     })
+     $("answer").mousedown(function(){
+                $("[data-toggle='popover']").popover('destroy');
+                let id= $(this).attr("id")
+                let a = id.split("_")[1]
+                let q = id.split("_")[2]
+                const val = $(this).html() 
+                $(this).css("background","pink") 
+                $(this).popover({content : getContent(val , q, a)   }).popover("show")
+     })
+
+
+     function acceptQuestion(num){
+        let val = $("#testQA_" + num).val()
+        if(val=="") val="....."
+        $("#question_"+ num).html(val)
+        $("[data-toggle='popover']").popover('destroy');
+        resetQA()
+     }
+
+    function acceptAnswer(Q, num){
+         let val = $("#testQA_" + num).val()
+         if(val=="") val="....."
+        $("#answer_"+ Q + "_" + num).html(val)
+        $("[data-toggle='popover']").popover('destroy');
+        resetQA()
+     }
+
+     function cancelQuestion(){
+          $("[data-toggle='popover']").popover('destroy');
+          resetQA()
+     }
+     function resetQA(){
+          $("answer").css("background", "")
+          $("question").css("background", "")
+
+     }         
+     
+    
+</script>

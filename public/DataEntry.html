@@ -1,0 +1,57 @@
+<script
+  src="http://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+  crossorigin="anonymous"></script>
+
+<style>
+  .head1{
+    font-size: 50px;
+    text-shadow: 4px 4px 3px grey;
+    color:Green
+  }
+
+  .list{
+    font-size: 18px;
+    color:grey;
+  }
+
+  textarea :hover{
+    background:gold;
+    font-size:16px;
+  }
+
+</style>
+
+<h1 class='head1'>Data Entry</h1>
+<div style="width:700px; text-align: center">
+  <form method=post  action="/data/saveQuestionPool"> 
+    <div style="display:none">
+      <input type="radio" value="1" name='subject'>Computer Science&nbsp;&nbsp;&nbsp;
+      <input type="radio" value="2" name='subject'>Nursing&nbsp;&nbsp;&nbsp;
+      <input type="radio" value="3" name='subject'>Psychology&nbsp;&nbsp;&nbsp;
+    </div>  
+      <hr>
+      
+    <div><b style="width:100px">Question:</b><textarea rows="10" cols="100" name="Question"></textarea></div><br>
+    <div style="display:none;"><b style="width:100px">Answer:</b><textarea rows="2" cols="100" name="answer"></textarea></div><br><br><br>
+    <input type="submit" onclick="document.getElementsByName('Question').value=''" value="Submit to Database">
+  </form>
+   
+</div>
+  
+<script>
+  $('name=subject').change( function(){
+    alert( $(this).value)
+  })
+function pickTest(src){
+  $("#testPlan").attr("src", src)
+  $("#navList").hide()
+  $("#examSection").show()
+}
+
+$("#closeExam").click( function(){
+  $("#navList").show()
+  $("#examSection").hide()
+})
+
+</script>

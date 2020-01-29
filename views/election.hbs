@@ -1,0 +1,291 @@
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+
+
+
+<!-- 
+ 
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="/javascripts/modernizr-custom.js"></script>
+-->
+<style>
+    .cand {
+        width: 400px;
+        height:24px;
+        display:inline-block;
+    }
+
+    h2{
+        background: navy;
+        color:white;
+        height:30px;
+        margin-bottom: 4px;
+        margin-top:0px;
+    }
+    h1{
+      color:grey;
+        height:30px;
+        margin-bottom: 4px;
+        margin-top:0px;
+    }
+
+    .candidateRow:hover {
+        background:rgb(231, 213, 179);
+        color:Black;
+        font-weight: 990;
+    }
+
+
+    .cand:hover {
+        background:rgb(155, 236, 78);
+        color:Blue;
+        font-weight: 990;
+    }
+
+    a{
+        cursor:pointer;
+    }
+    a:hover {
+        background: : Gold;
+    }
+
+    body{
+        padding:5px;
+    }
+
+    .tally {
+        border: 2px silver ridge;
+        padding:3px;
+
+    }
+
+
+</style>
+<div style="width:810px">
+    <center>
+        <img src="images/phil_flag.jpg" >
+    </center>
+    <votingSection style="display:none">
+        <h2><center>Candidates for <b style='color:Pink'>{{candidates}}</b>  |  Vote for <max></max>    <i id='voted'></i></center></h2>
+        <div>
+            <candidates></candidates>
+            <hr>
+            <div>
+                <center>
+                    <a onclick="drawChart()">Election Results</a>
+                </center>
+            </div>
+            <voterInfo style="display:none">
+                <div>Name: <input name"fname" size=35 id="fname" placeholder="First Name" >&nbsp;<input size=35 name"lname" id="lname" placeholder="Last Name" ></div>
+                <div>Email Address: <input size=60 type="email" name"email" id="email" placeholder="Valid email address here" ></div>
+            </voterInfo>
+            <button style='display:none' id='castVote'>Submit Vote</button>
+            <warning style='color:maroon; background:yellow'></warning>
+        </div>
+    </votingSection>
+
+    <votingChart>
+        <div>
+            <h1 style='margin-bottom:2px'>Be a responsible Filipino Citizen. <voteAction>Please cast your <a onclick='toggle("S")'>Vote</a></voteAction></h1>
+        </div>
+        <div id="chart"></div>
+    </votingChart>
+</div>
+
+<script>
+    var totalSelected =0
+    var candidates1 = [ 
+        "Abejo, Vangie (IND)",  "Afuang, Abner (WPP)", "Aguilar, Freddie (IND)", "Albani, Shariff (WPP)", "Alejano, Gary (LP)",
+        "Alfajora, Richard (IND)",  "Alunan, Raffy (BGMBYN)", "Angara, Edgardo (LDP)", "Aquino, Benigno Bam (LP)", "Arcega, Gerald (WPP)",
+        "Arellano, Ernesto (IND)",  "Arias,  Marcelino (WPP)", "Austria, Bernard (PDSP)", "Baldevarona, Balde (FFP)", "Binay, Nancy (UNA)",
+        "Bong Revilla, Ramon Jr (LAKAS)", "Caceres, Jesus (IND)", "Casiño, Toti (KDP)", "Cayetano, Pia (NP)", "Chavez, Melchor (WPP)",
+        "Chong, Glenn (KDP)", "Colmenares, Neri (MKBYN)", "De Guzman, Ka Leody (PLM)", "Dela Rosa, Bato (PDPLBN)", "Diokno, Chel (LP)",
+        "Ejercito, Estrada JV (NPC)", "Enrile, Juan Ponce (PMP)", "Escudero, Agnes (IND)", "Estrada, Jinggoy (PMP)", "Francisco, Elmer (PFP)",
+        "Gaddi, Charli (IND)", "Gadon, Larry (KBL)", "Generoso, Gen Pederalismo (IND)", "Go, Bong Go (PDPLBN)", "Guigayuma, Junbert (WPP)",
+        "Gutoc, Samira (LP)", "Hilbay, Pilo (AKSYON)", "Jangao, BFG Abraham (IND)", "Javellana, RJ (KDP)", "Lapid, Lito (NPC)",
+        "Macalintal, Macaromy (IND)", "Mallillin, Emily (IND)", "Mangondato, Faisal (IND)", "Mangudadatu, Dong (PDPLBN)", "Manicad, Jiggy (IND)",
+        "Marcos, Imee (NP)", "Matula, Jose Sonny (WPP)", "Meniano, Luther (WPP)", "Montaño, Allan (IND)", "Nalliw, Joan Sheelah (IND)",
+        "Ong, Doc Willie (LAKAS)", "Osmeña, Serge (IND)", "Padilla, Dado (PFP)", "Pimentel, Koko (PDPLBN)", "Poe, Grace (IND)",
+        "Roleda, Dan Kaibigan (UNA)", "Roxas, Mar (LP)", "Sahidulla, Lady Ann (KDP)", "Tañada, Lorenzo Erin Tapat (LP)", "Tolentino, Francis (PDPLBN)",
+        "Valdes, Butch (KDP)", "Villar, Cynthia (NP)"
+
+         
+
+
+
+        ]
+    var candidates2= [
+        "Andres, Wilma (NP)", "Calimlim, Orlando (NP)", "Chiu, Geoff Emerson (NP)", "Co, Napoleon (IND)",
+        "Dela Cruz, Rosemarie (NP)", "Ferreria, Ariel (NP)", "Francisco, Erwin (IND)", "Lumahan, Farrah Lee (IND)",
+        "Malanum, Salvador (IND)", "Ramirez, Itong (IND)", "Reyes, Fidel (NP)", "Santos, Aries Jeano (IND)", 
+        "Tiu, Jun (NP)", "Viado, Alexis (NP)"
+    ]
+    result = ""
+    var nextCol = 62/2 //candidates1.length/2
+    var max = 12
+    drawChart()
+
+
+    if("Senators" != "{{candidates}}") {
+        nextCol = 14/2 //candidates2.length/2
+        max = 8
+    } 
+    $("max").html(max)
+    for(let x=0; x< nextCol; x++) {
+            x = parseInt(x)
+          result += "<div>"
+              if("Senators"!="{{candidates}}") {
+                    result += "<div id='Candidate_"+ x +"' class='cand'><input class='candidateVote' id='Cand_"+ x +"' type='checkbox'>&nbsp;<b>" + (x + 1) + "</b>. " + candidates2[x] +"</div>"
+                    result += "<div id='Candidate_"+ (x + nextCol) +"'class='cand'><input class='candidateVote' id='Cand_"+ (x + nextCol) +"' type='checkbox'>&nbsp;<b>" + (x + 1+  nextCol) + "</b>. " + candidates2[x + nextCol] +"</div>"
+            
+              }
+              else {
+                    result += "<div id='Candidate_"+ x +"' class='cand'><input class='candidateVote' id='Cand_"+ x +"' type='checkbox'>&nbsp;<b>" + (x + 1) + "</b>. "  + candidates1[x] +"</div>"
+                    result += "<div id='Candidate_"+ (x + nextCol) +"' class='cand'><input class='candidateVote' id='Cand_"+ (x + nextCol) +"' type='checkbox'>&nbsp;<b>" + (x + 1 + nextCol) + "</b>. "  + candidates1[x + nextCol] +"</div>"
+              }
+           result += "</div>"
+    }
+    $("candidates").html(result)
+
+    function drawChart(){
+        let result="<div class='tally'><h2>Election Tally as of <b>" +new Date() + "</b></h2>"
+        var obj
+        var url 
+        if("Senators"=="{{candidates}}"){
+            obj =candidates1.slice(0)
+            url = "senatorsTally"
+        }
+        else {
+            obj = candidates2.slice(0)
+            url = "councilorsTally"
+        }
+        $.ajax({url: "/" + url, success: function(data){
+                console.log("DATA", data[0][0]["C1"]);
+                    var maxV= 0
+                    for(let x=0; x< obj.length; x++){
+                        let v = data[0][0]["C" + (x+1)]; //Math.floor(Math.random() * 400 )+ 30;
+                        if(v>maxV) maxV=v
+                    }
+                      for(let x=0; x< obj.length; x++){
+                        let v = data[0][0]["C" + (x+1)]; 
+                        let vx = parseInt(data[0][0]["C" + (x+1)] * (500/maxV)); //Math.floor(Math.random() * 400 )+ 30;
+                        result+= "<div class='candidateRow'><div style='font-size:10px;width:200px; display:inline-block'>"+ obj[x] +"</div><div style='font-size:10px;width:30px;display:inline-block'>"+v +"</div><div class='cand2' style='background:Teal;height:24px;font-size:10px;width:"+ vx +"px;display:inline-block'></div></div>"   
+                    }
+                    result +="</div>"
+                    $("#chart").html(result)
+                    toggle("C")
+                    // haveVoted
+                     $.ajax({url: "/haveVoted/{{candidates}}" , success: function(data){
+                        console.log("DATA", data);
+                        if(data.length>0){
+                            $("voteAction").html("Thank you very much.")
+                        }
+                            
+                    }});
+
+            }});
+       
+    }
+
+    function toggle(section){
+        if(section=="C"){
+            $("votingChart").show()
+            $("votingSection").hide()
+        }
+        else{
+            $("votingChart").hide()
+            $("votingSection").show()
+        }
+    }
+
+
+    $(".candidateVote").change(function(){
+        checkedYN = $(this).prop('checked')
+        let id = $(this).attr("id").replace("Cand", "Candidate")
+        let voted = (checkedYN==true)? "Voted" : "Removed"
+        //alert("Candidate "+ value + " has been " + voted)
+        if(checkedYN) {
+            totalSelected++
+            $("#" + id).css("background","Green")
+            $("#" + id).css("color","White")
+        }
+        else
+        {
+            totalSelected--
+            $("#" + id).css("background","transparent")
+            $("#" + id).css("color","Black")
+        }
+        if(totalSelected>(max/4) && totalSelected<=max) {
+            $("#castVote").show().html("Submit Vote")
+            $("warning").hide()
+            $("voterInfo").hide()
+        }
+        else {
+            $("#castVote").hide()
+            if(totalSelected>max) {
+                    $("warning").html("You can only vote for a maximum of " + max + " candidates.<br>Please check your vote.").show()
+            }
+        }
+        $("#voted").html("|   Selected: " + totalSelected)
+        
+        
+    })
+
+
+    $("#castVote").click( function() {
+        let txt= $(this).html()
+        if(txt=="Submit Vote"){
+            /*
+            var res = ""
+            for(let x=0; x< nextCol * 2; x++){
+                let val = ( $("#Cand_" + x).prop("checked") ) ? "Y" : "N"
+                res += val;
+            }
+            */
+                $(this).html("OK, submit my vote.")
+                $("voterInfo").show()
+
+        }
+        else {
+            if($("#email").val()=="") {
+                alert("Please type your email address to vote.\nThank you.")
+                $("#email").focus()
+            }
+            else
+            {
+                var res = ""
+                res += $("#fname").val() + "~"
+                res += $("#lname").val() + "~"
+                res += $("#email").val() + "~"
+                for(let x=0; x< nextCol * 2; x++){
+                    let val = ( $("#Cand_" + x).prop("checked") ) ? "Y" : "N"
+                    res += val;
+                }
+                //alert("submit to DB:\n" + res)
+                //voteSubmit
+                var url = "voteSubmit/"+  res
+                 $.ajax({url: "/" + url, success: function(data){
+                        console.log("DATA", data);
+                        drawChart()
+                        alert("Thank you very much. Your vote has be counted.")
+                    }});
+
+            }
+        }
+
+
+        
+        //alert(res)
+    })
+
+</script>

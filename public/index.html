@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<style>
+  .head1{
+    font-size: 50px;
+    text-shadow: 1px 3px 2px grey;
+    color:Orange
+  }
+  .list{
+    font-size: 18px;
+    padding: 20px;
+    margin-left: 50px;
+    width: 400px;
+    background-color: silver;
+  }
+  .popUp{
+    font-size: 14px;
+    padding: 10px;
+    background-color: linen;
+    color: grey;
+  }
+  a {
+    color:grey;
+    cursor: pointer;
+  }
+
+</style>
+<h1 class='head1'>The world we live in is simply an Exam</h1>
+<div class='list' id='navList'>
+  <div><u>Please select an Exam Item</u></div>
+  <div><a href="javascript: pickTest('/test/IQ')">Take an IQ Test</a></div>
+  <div><a href="javascript: pickTest('/test/relationships')">Are you good with Relationships?</a></div>
+  <div><a href="javascript: pickTest('/test/yearsDiff')">Get ready to be fooled with Age.</a></div>
+  <div><a href="javascript: pickTest('/test/oddman')">The world is not crazy. It is just Odd.</a></div>
+  <div><a href="javascript: pickTest('/test/fitb')">Fill In The Blanks.</a></div>
+  <hr>
+  <div><a href="javascript: pickTest('/test/gen')">Develop a Test Material</a></div>
+  <hr>
+  <div><button  title="Here are my reasons:" data-html=true type="button" class="btn btn-info" data-toggle="popover" data-placement="right"  data-trigger="focus"  id="btnReasons">Reasons</button> I would like to join BHHC.   <a href="javascript: pickTest('/reasons.html')">Details</a></div>
+</div>
+<div id="examSection" style='display:none'>
+  <button class="btn btn-danger" id='closeBtn' title="Are you sure?" data-html="true" type="button" data-toggle="popover" data-placement="right" 
+    data-trigger="manual"></button>
+  <iframe style="border:0; width:95%; height:1200px" id='testPlan'></iframe>
+</div>
+<script>
+    var isReasonLoaded = false;
+    function pickTest(src){
+      // make sure that the close button has the proper corresponding label
+      if(src.indexOf("gen")>0){
+        $("#closeBtn").html("Close The Exam Generator")
+      }
+      else
+      {
+        if(src.indexOf("reasons")>0)
+        {
+          $("#closeBtn").html("Close Reason Details")
+        }
+        else
+        $("#closeBtn").html("Close The Exam")
+      }
+      $("#testPlan").attr("src", src)
+      $("#navList").hide()
+      $("#examSection").show()
+    }
+    function confirmedClose(){
+            console.log("Close!")
+            $("#navList").show()
+            $("#examSection").hide()
+            $("#closeBtn").popover("hide"); 
+    }
+
+    $("#closeBtn").click( function(){
+        $("#closeBtn").popover({content:$("<div><button onclick='confirmedClose()' class='btn btn-danger'>Yes, please.</button>&nbsp;<button class='btn btn-link'>No</button></div>")}); 
+        $("#closeBtn").popover("show"); 
+    })
+
+    $("#btnReasons").click( function(){
+      if(!isReasonLoaded){  // load the reasons.txt only once
+        $.get('reasons.txt', function (response) {
+        response = "<div class='popUp'>"+response+"</div>"
+        $("#btnReasons").popover({content: response})
+        $("#btnReasons").popover("show");  
+        isReasonLoaded = true;
+        });
+      } 
+    })
+
+</script>

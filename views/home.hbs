@@ -1,0 +1,25 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<h1>Welcome to TestWiz</h1>
+<h2>Where Brilliant Ideas Thrive!</h2><hr>
+<h3 style='color:Pink'>Believe me it is going to happen very soon. Gee Whiz!</h3>
+<div style='color:green'>
+{{result.ClientName}}
+<p style='font-size:20px'>{{{result}}}</p>
+</div>
+CREATE DEFINER=`dbmasteruser`@`%` PROCEDURE `ELECTION_SENATORS`()
+BEGIN
+	select sum(Senator_1) as C1,   sum(Senator_2) as C2,  sum(Senator_3) as C3 ,  sum(Senator_4) as C4,  sum(Senator_5) as C5,  sum(Senator_6) as C6,  sum(Senator_7) as C7,  sum(Senator_8) as C8,  sum(Senator_9) as C9,  sum(Senator_10) as C10,
+    select sum(Senator_1) as C11,  sum(Senator_2) as C12, sum(Senator_3) as C13 , sum(Senator_4) as C14, sum(Senator_5) as C15, sum(Senator_6) as C16, sum(Senator_7) as C17, sum(Senator_8) as C18, sum(Senator_9) as C19, sum(Senator_10) as C20,
+    select sum(Senator_1) as C21,  sum(Senator_2) as C22, sum(Senator_3) as C23 , sum(Senator_4) as C24, sum(Senator_5) as C25, sum(Senator_6) as C26, sum(Senator_7) as C27, sum(Senator_8) as C28, sum(Senator_9) as C29, sum(Senator_10) as C30,
+    select sum(Senator_1) as C31,  sum(Senator_2) as C32, sum(Senator_3) as C33 , sum(Senator_4) as C34, sum(Senator_5) as C35, sum(Senator_6) as C36, sum(Senator_7) as C37, sum(Senator_8) as C38, sum(Senator_9) as C39, sum(Senator_10) as C40,
+    select sum(Senator_1) as C41,  sum(Senator_2) as C42, sum(Senator_3) as C43 , sum(Senator_4) as C44, sum(Senator_5) as C45, sum(Senator_6) as C46, sum(Senator_7) as C47, sum(Senator_8) as C48, sum(Senator_9) as C49, sum(Senator_10) as C50,
+    select sum(Senator_1) as C51,  sum(Senator_2) as C52, sum(Senator_3) as C53 , sum(Senator_4) as C54, sum(Senator_5) as C55, sum(Senator_6) as C56, sum(Senator_7) as C57, sum(Senator_8) as C58, sum(Senator_9) as C59, sum(Senator_10) as C60,
+    select sum(Senator_1) as C61,  sum(Senator_2) as C62
+    from Election_Senators;
+END
