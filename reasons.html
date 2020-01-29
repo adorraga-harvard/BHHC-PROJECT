@@ -1,0 +1,33 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<ol>
+    <li>My education and experience perfectly match the requirements of this BHHC Job Opportunity.</li>
+        <ul>
+            <li>Ability to work quickly in a small-team Agile development environment.</li>
+            <li>Clear verbal and written communication.</li>
+            <li>Demonstrated ability to write clear specifications for complex processes.</li>
+            <li>Effective interpersonal skills collaborating with business partners and technical team members.</li>
+            <li>Experience participating in code review and acceptance process to improve code quality·</li>
+            <li>Responsive to the input and direction of team members.</li>
+            <li>Exhibit results oriented and structured work habits.</li>
+            <li>Present an ethical, enthusiastic, tactful, resourceful, and professional profile.</l1>
+        </ul>
+    <li>The Job Responsibility properly aligns with my vision of an ideal workplace.</li>
+    <li>Prestigious organizations, like BHHC, will continually challenge me to work better than my very best to keep up with its very high standards.</li>
+    <li>Who would not want to work under a company who offers the following <u onclick="getBenefits()" title='Click to see the benefits' id='benefits'>benefits</u>?
+        <benefits>
+        </benefits>
+    </li>
+</ol>
+
+<script>
+
+function getBenefits(){
+        $.get('benefits.txt', function (response) {
+        response = response.replace(/\|/g, "</li><li>")
+        response = "<ul><li>"+ response + "</li></ul>"
+        console.log(response)
+        $("benefits").html(response)
+      })
+    }
+</script>
