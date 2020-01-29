@@ -1,4 +1,4 @@
-# BHHC
+# BHHC Project
 This is a sample Github Project for the BHHC Requirements.
 
 This project is a work-in-progress...
